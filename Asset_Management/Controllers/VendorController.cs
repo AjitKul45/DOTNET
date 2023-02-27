@@ -3,6 +3,9 @@ using Asset_Management.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Asset_Management.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
+using System.Data;
 
 namespace Asset_Management.Controllers
 {
@@ -10,6 +13,8 @@ namespace Asset_Management.Controllers
     /// USed to Map the Received JSON Data from Http POST and PUT Request to CLR
     /// Object
     [ApiController]
+    [Authorize(Roles = "Admin")]
+    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class VendorController : Controller
     {
         
