@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CS_Assessment0._1.Models.SalarySlip>
+
+@{
+    ViewData["Title"] = "Salary Slip";
+}
+
+<h1>ViewSalarySlip</h1>
+<h1></h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SlipId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                Month
+            </th>
+            <th>
+                Year
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SlipId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem =>(item.DateFrom.Value.Month))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTo.Value.Year)
+            </td>
+            <td>
+                    @Html.ActionLink("View","DetailedPaySlip", "User", new {id=item.UserId})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

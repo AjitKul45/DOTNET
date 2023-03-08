@@ -1,0 +1,30 @@
+﻿@model CS_Assessment0._1.Models.UserInfo
+
+@{
+
+}
+
+
+@Html.ActionLink("Edit Profile", "Edit" ,"User",new { id=ViewBag.id })
+<br/>
+@Html.ActionLink("Add Investments","Create","Investment")
+<br />
+@Html.ActionLink("Apply for Leave","Create","Leave")
+<br/>
+@Html.ActionLink("Approve leaves","LeavesToApprove","Leave")
+<br/>
+@Html.ActionLink("Add Salary Details","AddSalaryDetails","Accountant")
+<br/>
+@Html.ActionLink("Add Consultant Details","AddDetails","Consultant")
+<br/>
+@Html.ActionLink("Approve consultant details","ConsultantDetailsToApprove","User")
+<br />
+@Html.ActionLink("Salary Slips","ViewSalarySlip","User",new { id=ViewBag.id })
+<br/>
+@Html.ActionLink("Calsulate salary","CalculateSal","Accountant")
+<br />
+@Html.ActionLink("Roles","Index","Role")
+<br />
+@Html.ActionLink("Assign Role To User","AssignRoleToUser","Role")
+<br />
+@Html.ActionLink("Create Role","Create","Role")

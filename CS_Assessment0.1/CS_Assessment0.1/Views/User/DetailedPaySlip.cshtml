@@ -1,0 +1,95 @@
+﻿@model CS_Assessment0._1.Models.PaySlip
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h2>Pay Slip</h2>
+<table class="table">
+    <tr>
+        <th colspan="2">@Model.user.FirstName.ToUpper() @Model.user.LastName.ToUpper() </th>
+    </tr>
+    <tr>
+        <td>Staff id : @Model.user.UserId</td>
+        <td>Date joined :@Model.user.JoiningDate </td>
+    </tr>
+    <tr>
+        <td colspan="2">Bank Account No :@Model.user.AccNo</td>
+    </tr>
+        
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <th colspan="2">Salary Details</th>
+    </tr>
+    <tr>
+        <th>Earnings</th>
+        <th>Amount</th>
+    </tr>
+    <tr>
+        <td>Basic Pay </td>
+        <td>@Model.salary.BasicPay</td>
+    </tr>
+    <tr>
+        <td>HRA</td>
+        <td>@Model.salary.Hra</td>
+    </tr>
+    <tr>
+        <td>TA</td>
+        <td>@Model.salary.Ta</td>
+    </tr>
+    <tr>
+        <td>DA</td>
+        <td>@Model.salary.Da</td>
+    </tr>
+    <tr>
+        <td>Overtime</td>
+        <td>@Model.salary.Overtime</td>
+    </tr>
+    <tr>
+        <td>Weekend worked</td>
+        <td>@Model.salary.WeekendWorked</td>
+    </tr>
+    <tr>
+        <th >Total Earnings (A)</th>
+        <th>@Model.slip.TotalEarnings</th>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <th>Contribution</th>
+        <th>Amount</th>
+    </tr>
+    <tr>
+        <td>PF Employee</td>
+        <td>@Model.investment.PfAmount</td>
+    </tr>
+    <tr>
+        <th>Total Contribution (B)</th>
+        <th>@Model.slip.Contribution</th>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <th>Deduction</th>
+        <th>Amount</th>
+    </tr>
+    <tr>
+        <td>TDS</td>
+        <td>@Model.salary.Tds</td>
+    </tr>
+    <tr>
+        <th>Total Deduction (C)</th>
+        <th>@Model.slip.Deduction</th>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+        <th>Net Amount (A-B-C)</th>
+        <th>@Model.slip.NetAmount</th>
+    </tr>
+</table>

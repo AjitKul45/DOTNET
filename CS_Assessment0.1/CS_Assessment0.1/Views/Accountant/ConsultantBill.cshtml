@@ -1,0 +1,41 @@
+﻿@model CS_Assessment0._1.Models.CalBill
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h2>Bill</h2>
+<table class="table">
+    <tr>
+        <th colspan="2">@Model.consultant.FirstName @Model.consultant.LastName</th>
+    </tr>
+    <tr>
+        <td>@Model.consultant.UserId</td>
+        <td>@Model.consultant.AccNo</td>
+    </tr>
+    <tr>
+        <td colspan="2"></td>
+    </tr>
+    
+    <tr>
+        <td>Days Workded</td>
+        <td>@Model.details.NoDays</td>
+    </tr>
+    <tr>
+        <td>Extra Hours Worked</td>
+        <td>@Model.details.ExtraHoursWorked</td>
+    </tr>
+    <tr>
+        <th>Earning</th>
+        <th>Amount</th>
+    </tr>
+    <tr>
+        <td>Working Day Amount</td>
+        <td>@((Model.details.DaysWorked*Model.details.FixedPay).ToString())</td>
+    </tr>
+    <tr>
+        <td>Extra Hour Amount</td>
+        <td>@((Model.details.ExtraHoursWorked * 2500).ToString())</td>
+    </tr>
+    
+</table>

@@ -1,0 +1,37 @@
+﻿@model CS_Assessment0._1.Models.UserRole
+
+@{
+    ViewData["Title"] = "AssignRoleToUser";
+}
+
+<h1>Assign Role To User</h1>
+
+@Html.BeginForm()
+@{ 
+    <table>
+            <tbody>
+                <tr>
+                    <td>Users</td>
+                    <td>Roles</td>
+
+                </tr>
+                <tr>
+                    <td>
+                    @Html.DropDownList("UserId")
+                    </td>
+                    <td>
+                    @Html.DropDownList("RoleId")
+                    </td>
+                </tr>
+            </tbody>
+    </table>
+    <input type="submit" value="Assign Role To User" />
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

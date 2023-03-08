@@ -1,0 +1,88 @@
+﻿@model IEnumerable<CS_Assessment0._1.Models.Consultant>
+
+@{
+    ViewData["Title"] = "ConsultantDetailsToApprove";
+}
+
+<h1>ConsultantDetailsToApprove</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FixedPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaysWorked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExtraHoursWorked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerHourPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoDays)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FixedPay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysWorked)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExtraHoursWorked)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerHourPay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                    @Html.ActionLink("Approve", "ApproveConsultantDetail", new { id= item.CId }) |
+                    @Html.ActionLink("Decline", "DeclineConsultantDetail", new { id= item.CId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
