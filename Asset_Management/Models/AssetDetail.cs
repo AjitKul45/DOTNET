@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Asset_Management.Models
 {
@@ -24,8 +25,9 @@ namespace Asset_Management.Models
         public string? Remarks { get; set; }
         public string? Ram { get; set; }
         public int? VendorId { get; set; }
-
+        [JsonIgnore]
         public virtual Vendor? Vendor { get; set; }
+        [JsonIgnore]
         public virtual ICollection<AssetTransaction> AssetTransactions { get; set; }
     }
 }

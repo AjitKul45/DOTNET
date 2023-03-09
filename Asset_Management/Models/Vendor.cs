@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Asset_Management.Models
 {
@@ -16,7 +17,7 @@ namespace Asset_Management.Models
         public string? Address { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public DateTime? TerminationDate { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<AssetDetail> AssetDetails { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Asset_Management.Models
 {
@@ -20,8 +21,9 @@ namespace Asset_Management.Models
         public int? AssetId { get; set; }
         public string? IssuedBy { get; set; }
         public string? Department { get; set; }
-
+        [JsonIgnore]
         public virtual AssetDetail? Asset { get; set; }
+        [JsonIgnore]
         public virtual User? User { get; set; }
     }
 
