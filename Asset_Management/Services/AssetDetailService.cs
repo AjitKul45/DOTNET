@@ -1,5 +1,7 @@
 ﻿using Asset_Management.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Asset_Management.Services
@@ -13,6 +15,37 @@ namespace Asset_Management.Services
         {
             this.ctx = db;
         }
+
+        public async Task<IEnumerable> GetAssetCount()
+        {
+            var list = (await ctx.AssetDetails.ToListAsync());
+
+            var counts = from a in list
+                         group a by a.Tyape into grp
+                         select new
+                         {
+                             type = grp.Key,
+                             count = grp.Count()
+                         };
+
+            return counts;
+        }
+
+        public async Task<int> GetCountOfNotAssignedAssets()
+        {
+            int?[] allAssets = (await ctx.AssetDetails.ToListAsync()).Select(a => a.Id).ToArray();
+            int?[] assignedAssets = (await ctx.AssetTransactions.ToListAsync()).Select(a => a.AssetId).ToArray();
+
+            var count = allAssets.Except(assignedAssets);
+
+            return count.Count();
+            }
+
+        public Task<IEnumerable> GetStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         async Task<AssetDetail> IService<AssetDetail, int>.CreateAsync(AssetDetail entity)
         {
             try

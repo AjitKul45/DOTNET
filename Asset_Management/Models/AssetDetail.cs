@@ -11,7 +11,7 @@ namespace Asset_Management.Models
             AssetTransactions = new HashSet<AssetTransaction>();
         }
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string? Tyape { get; set; }
         public string? Name { get; set; }
         public string? Proprietary { get; set; }

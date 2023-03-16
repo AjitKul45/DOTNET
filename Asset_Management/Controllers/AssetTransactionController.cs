@@ -9,8 +9,8 @@ namespace Asset_Management.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+    //[Authorize(Roles = "Admin")]
+    //[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class AssetTransactionController : ControllerBase
     {
         IService<AssetTransaction, int> assetService;

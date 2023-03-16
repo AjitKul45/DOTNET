@@ -1,5 +1,6 @@
 ﻿using Asset_Management.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Diagnostics.Metrics;
 
 namespace Asset_Management.Services
@@ -11,6 +12,12 @@ namespace Asset_Management.Services
         {
             ctx = con;
         }
+
+        public Task<IEnumerable> GetStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         async Task<User> IService<User, int>.CreateAsync(User entity)
         {
             var user = await ctx.Users.AddAsync(entity);

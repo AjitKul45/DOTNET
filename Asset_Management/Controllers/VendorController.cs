@@ -13,8 +13,8 @@ namespace Asset_Management.Controllers
     /// USed to Map the Received JSON Data from Http POST and PUT Request to CLR
     /// Object
     [ApiController]
-    [Authorize(Roles = "Admin")]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+    //[Authorize(Roles = "Admin,Member")]
+    //[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class VendorController : Controller
     {
         
@@ -78,6 +78,12 @@ namespace Asset_Management.Controllers
            
                 return Ok(record);
             
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetVendorStatus()
+        {
+            return Ok( await vendorService.GetStatus());
         }
 
     }

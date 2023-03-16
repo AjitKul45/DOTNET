@@ -9,8 +9,8 @@ namespace Asset_Management.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles ="Admin")]
-    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+    //[Authorize]
+    //[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class AssetDetailsController : ControllerBase
     {
         IService<AssetDetail, int> assetService;
@@ -105,5 +105,22 @@ namespace Asset_Management.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAssetsCount()
+        {
+            return Ok(await assetDetailsService.GetAssetCount());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetStatus()
+        {
+            return Ok(await assetDetailsService.GetCountOfNotAssignedAssets());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAssetCount()
+        {
+            return Ok((await assetService.GetAsync()).Count());
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Asset_Management.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace Asset_Management.Services
 {
@@ -10,6 +11,12 @@ namespace Asset_Management.Services
         {
             this.ctx = ctx;
         }
+
+        public Task<IEnumerable> GetStatus()
+        {
+            throw new NotImplementedException();
+        }
+
         async Task<AssetTransaction> IService<AssetTransaction, int>.CreateAsync(AssetTransaction entity)
         {
             try
