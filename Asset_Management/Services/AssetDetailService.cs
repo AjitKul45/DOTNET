@@ -182,7 +182,7 @@ namespace Asset_Management.Services
             catch (Exception ex)
             {
 
-                throw ex;
+                throw new Exception("Asset not found!");
             }
         }
     }

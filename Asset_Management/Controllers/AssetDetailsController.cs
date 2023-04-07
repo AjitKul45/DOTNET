@@ -3,37 +3,51 @@ using Asset_Management.Models;
 using Asset_Management.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web.Resource;
 
 namespace Asset_Management.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    //[ServiceFilter(typeof(LogFilterAttribute))]
     //[Authorize]
     //[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class AssetDetailsController : ControllerBase
     {
         IService<AssetDetail, int> assetService;
         IAssetDetailService<AssetDetail, string> assetDetailsService;
+        asset_managementContext ctx;
 
-        public AssetDetailsController(IService<AssetDetail, int> assetService,IAssetDetailService<AssetDetail,string> assetDetailsService)
+        public AssetDetailsController(IService<AssetDetail, int> assetService,IAssetDetailService<AssetDetail, string> assetDetailsService, asset_managementContext ctx)
         {
             this.assetService = assetService;
             this.assetDetailsService = assetDetailsService;
+            this.ctx = ctx;
         }
 
         [HttpGet]
-        //[ServiceFilter(typeof(LogFilterAttribute))]
+        
         //[LogFilter]
         public async Task<IActionResult> GetAllAssetDetails()
         {
             return Ok(await assetService.GetAsync());
+           
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAssetDetails(int id)
         {
-            return Ok(await assetService.GetAsync(id));
+            //return Ok(await assetService.GetAsync(id));
+            try
+            {
+                AssetDetail asset  = await assetService.GetAsync(id);
+                return Ok(asset);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -53,14 +67,22 @@ namespace Asset_Management.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsset(int id,AssetDetail assetDetail)
         {
-            if (ModelState.IsValid)
+            try
             {
-                
-                return Ok(await assetService.UpdateAsync(id, assetDetail));
+                if (ModelState.IsValid)
+                {
+
+                    return Ok(await assetService.UpdateAsync(id, assetDetail));
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest(ModelState);
+
+                throw ex;
             }
         }
 
@@ -121,6 +143,27 @@ namespace Asset_Management.Controllers
         public async Task<IActionResult> GetAllAssetCount()
         {
             return Ok((await assetService.GetAsync()).Count());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetListOfUnassignedAsset()
+        {
+           
+            var result = ctx.AssetDetails
+           .Where(ad => !ctx.AssetTransactions.Any(at => at.AssetId == ad.Id))
+           .ToList();
+            return Ok(result);
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetListOfAssignedAsset()
+        {
+
+            var result = ctx.AssetDetails
+           .Where(ad => ctx.AssetTransactions.Any(at => at.AssetId == ad.Id))
+           .ToList();
+            return Ok(result);
         }
     }
 }

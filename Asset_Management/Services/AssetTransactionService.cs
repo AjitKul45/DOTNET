@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Asset_Management.Services
 {
-    public class AssetTransactionService : IService<AssetTransaction, int>,IAssetTransactionService<AssetTransaction,string>
+    public class AssetTransactionService : IService<AssetTransaction, int>,IAssetTransactionService<AssetTransaction,string>,IAssetTransaction
     {
         asset_managementContext ctx;
         public AssetTransactionService(asset_managementContext ctx)
@@ -21,7 +21,7 @@ namespace Asset_Management.Services
         {
             try
             {
-                //entity.UserId = null;
+                entity.UserId = null;
                 var result = await ctx.AssetTransactions.AddAsync(entity);
                 await ctx.SaveChangesAsync();
                 return result.Entity;
@@ -133,6 +133,34 @@ namespace Asset_Management.Services
 
             }
             return result;
+        }
+
+
+
+        async Task<IEnumerable> IAssetTransaction.GetDetailsOfTransactions()
+        {
+            var assets = await ctx.AssetDetails.ToListAsync();
+            var trasactions = await ctx.AssetTransactions.ToListAsync();
+
+            var detailsTransaction = from t in trasactions
+                                     join a in assets on t.AssetId equals a.Id
+                                     select new
+                                     {
+                                         assetId = a.Id,
+                                         assetName = a.Name,
+                                         assetType = a.Tyape,
+                                         transactionId = t.Id,
+                                         empId = t.EmpId,
+                                         email = t.Email,
+                                         username = t.UserName,
+                                         location = t.Location,
+                                         issueDate = t.IssueDate,
+                                         issuedBy = t.IssuedBy,
+                                         submitDate = t.SubmitDate,
+                                         department = t.Department,
+                                     };
+
+            return detailsTransaction;
         }
     }
 }

@@ -40,12 +40,5 @@ namespace Asset_Management.Models
             return true;
         }
     }
-    public class MyEmailCheck : ValidationAttribute 
-    {
-        public override bool IsValid(object? value)
-        {
-            return false;
-        }
-
-    }
+    
 }

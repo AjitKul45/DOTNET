@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Asset_Management.CustomMiddleware;
+using System.Runtime.CompilerServices;
 
 namespace Asset_Management
 {
@@ -11,10 +12,14 @@ namespace Asset_Management
     public class ExceptionMiddlewre
     {
         RequestDelegate _next;
+        private readonly ILogger _logger;
 
-        public ExceptionMiddlewre(RequestDelegate next)
+
+        public ExceptionMiddlewre(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
+            _logger = loggerFactory.CreateLogger<ExceptionMiddlewre>();
+
         }
         /// <summary>
         /// Write the logic for Custom Middleware Here 
@@ -34,8 +39,9 @@ namespace Asset_Management
                 // 1. Read the Error MEssage
                 string message = ex.Message;
                 // 1.a. Define a Error COde for Response Here
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 // 2. STore this information into the record
+                _logger.LogError(message);
                 var errorResponse = new ErrorResponse()
                 {
                     StatucCode = context.Response.StatusCode,

@@ -15,10 +15,12 @@ namespace Asset_Management.Controllers
     {
         IService<AssetTransaction, int> assetService;
         IAssetTransactionService<AssetTransaction,string> assetTransactionService;
-        public AssetTransactionController(IService<AssetTransaction, int> assetService, IAssetTransactionService<AssetTransaction, string> assetTransactionService)
+        IAssetTransaction tranService;
+        public AssetTransactionController(IService<AssetTransaction, int> assetService, IAssetTransactionService<AssetTransaction, string> assetTransactionService, IAssetTransaction tranService)
         {
             this.assetService = assetService;
             this.assetTransactionService = assetTransactionService;
+            this.tranService = tranService;
         }
 
         [HttpGet]
@@ -71,7 +73,7 @@ namespace Asset_Management.Controllers
             {
                 return NotFound($"Record not found with Id {id}");
             }
-            return Ok(await assetService.GetAsync());
+            return Ok(await tranService.GetDetailsOfTransactions());
         }
         [HttpGet("get_by_email/{email}")]
         public async Task<IActionResult> GetByEmail(string email)
@@ -122,5 +124,11 @@ namespace Asset_Management.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetDetailTransactions()
+        {
+            var list = await tranService.GetDetailsOfTransactions();
+            return Ok(list);
+        }
     }
 }

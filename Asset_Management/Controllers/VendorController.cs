@@ -6,6 +6,7 @@ using Asset_Management.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Web.Resource;
 using System.Data;
+using Asset_Management.CustomMiddleware;
 
 namespace Asset_Management.Controllers
 {
@@ -13,15 +14,16 @@ namespace Asset_Management.Controllers
     /// USed to Map the Received JSON Data from Http POST and PUT Request to CLR
     /// Object
     [ApiController]
+    //[TypeFilter(typeof(LogFilterAttribute))]
     //[Authorize(Roles = "Admin,Member")]
     //[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class VendorController : Controller
     {
-        
-        IService<Vendor,int> vendorService;
+
+        IService<Vendor, int> vendorService;
         public VendorController(IService<Vendor, int> vendorService)
         {
-           
+
             this.vendorService = vendorService;
         }
 
@@ -29,7 +31,7 @@ namespace Asset_Management.Controllers
         public async Task<IActionResult> GetAllVendors()
         {
             var record = await vendorService.GetAsync();
-            if(record == null) { return NotFound("Record not found"); }
+            if (record == null) { return NotFound("Record not found"); }
             return Ok(record);
         }
 
@@ -44,10 +46,10 @@ namespace Asset_Management.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
 
                 var record = await vendorService.CreateAsync(data);
-               
+
                 return Ok(record);
             }
             else
@@ -60,10 +62,10 @@ namespace Asset_Management.Controllers
         {
             if (ModelState.IsValid)
             {
-                var record = await vendorService.UpdateAsync(id,data);
-                
-                    return Ok(record);
-               
+                var record = await vendorService.UpdateAsync(id, data);
+
+                return Ok(record);
+
             }
             else
             {
@@ -73,17 +75,17 @@ namespace Asset_Management.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVendor(int id)
         {
-
             var record = await vendorService.DeleteAsync(id);
-           
-                return Ok(record);
-            
+
+            return Ok(await vendorService.GetAsync());
+
+
         }
 
         [HttpGet]
         public async Task<IActionResult> GetVendorStatus()
         {
-            return Ok( await vendorService.GetStatus());
+            return Ok(await vendorService.GetStatus());
         }
 
     }
